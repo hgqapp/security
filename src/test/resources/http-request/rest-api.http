@@ -1,0 +1,12 @@
+POST http://localhost:8080/user/create
+Cache-Control: no-cache
+Content-Type: application/x-www-form-urlencoded
+
+username=a&password=b&enabled=true
+
+###
+
+GET http://localhost:8080/user/get?userId=1
+Accept: application/json
+
+###

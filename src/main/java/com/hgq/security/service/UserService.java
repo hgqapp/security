@@ -28,6 +28,8 @@ public class UserService {
     public Long crate(UsersDto user) {
         Users userModel = modelMapper.map(user, Users.class);
         userModel.setSalt("1");
+        userModel.setCreateTime(System.currentTimeMillis());
+        userModel.setUpdateTime(userModel.getCreateTime());
         return userRepository.save(userModel).getUserId();
     }
 

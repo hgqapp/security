@@ -15,5 +15,6 @@ public class UsersVo {
     private Long userId;
     private String username;
     private Boolean enabled;
-
+    private Long createTime;
+    private Long updateTime;
 }

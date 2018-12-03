@@ -9,6 +9,8 @@ import org.springframework.security.config.annotation.method.configuration.Globa
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.provisioning.JdbcUserDetailsManager;
 
 import javax.sql.DataSource;
 
@@ -28,39 +30,36 @@ public class SecurityConfig {
         @Override
         protected void configure(HttpSecurity http) throws Exception {
             http
-                    .authorizeRequests()
+                .antMatcher("/api/**")
+                .authorizeRequests()
                     .anyRequest().authenticated()
                     .and()
-            .formLogin().and()
-            .httpBasic();
+                .httpBasic();
         }
 
     }
 
-//    @Configuration
-//    public static class FormLoginWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
-//
-//        @Override
-//        protected void configure(HttpSecurity http) throws Exception {
-//            http
-//                    .authorizeRequests()
-//                    .antMatchers("/css/**", "/index").permitAll()
-//                    .antMatchers("/user/**").hasRole("USER")
-//                    .anyRequest().authenticated()
-//                    .and()
-//                    .formLogin()
-//                    .loginPage("/login").failureUrl("/login-error").permitAll()
-//                    .and()
-//                    .logout()
-//                    .logoutUrl("/my/logout")
-//                    .logoutSuccessUrl("/my/index")
-//                    .invalidateHttpSession(true)
-//                    .deleteCookies("cookies")
-//                    .logoutSuccessHandler(null)
-//                    .addLogoutHandler(null);;
-//        }
-//    }
-//
+    @Configuration
+    public static class FormLoginWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
+
+        @Override
+        protected void configure(HttpSecurity http) throws Exception {
+            http
+                .authorizeRequests()
+                    .antMatchers("/css/**", "/index").permitAll()
+                    .anyRequest().authenticated()
+                .and()
+                    .formLogin()
+                    .loginPage("/login").failureUrl("/login-error").permitAll()
+                    .and()
+                .logout()
+                    .logoutUrl("/my/logout")
+                    .logoutSuccessUrl("/my/index")
+                    .invalidateHttpSession(true)
+                    .deleteCookies("cookies");
+        }
+    }
+
     @EnableGlobalMethodSecurity(prePostEnabled = true)
     public static class MethodSecurityConfig extends GlobalMethodSecurityConfiguration {
 //        @Override
@@ -73,10 +72,9 @@ public class SecurityConfig {
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth, DataSource dataSource) throws Exception {
-        auth.jdbcAuthentication()
-                .dataSource(dataSource)
-                .authoritiesByUsernameQuery("")
-                .groupAuthoritiesByUsername("")
-                .usersByUsernameQuery("SELECT * FROM username = ?");
+        SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        JdbcUserDetailsManager userDetailsService = auth.jdbcAuthentication().getUserDetailsService();
+        userDetailsService.setDataSource(dataSource);
     }
 }

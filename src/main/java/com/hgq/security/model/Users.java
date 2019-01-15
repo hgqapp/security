@@ -15,6 +15,8 @@ import javax.persistence.*;
 @Entity
 @Table(name = "Users", indexes = {
         @Index(name = "uk_username", columnList = "username", unique = true),
+        @Index(name = "idx_email", columnList = "email", unique = true),
+        @Index(name = "idx_phone", columnList = "phone", unique = true),
         @Index(name = "idx_create_time", columnList = "create_time"),
         @Index(name = "idx_update_time", columnList = "update_time")})
 public class Users {
@@ -27,6 +29,10 @@ public class Users {
     private String username;
     @Column(length = 50, nullable = false)
     private String password;
+    @Column(length = 100)
+    private String email;
+    @Column(length = 50)
+    private String phone;
     @Column(length = 50, nullable = false)
     private String salt;
     @Column(nullable = false, columnDefinition = "boolean default 1")

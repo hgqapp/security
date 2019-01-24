@@ -1,0 +1,11 @@
+{
+  "properties": [
+    {
+      "name": "spring.security.enabled",
+      "type": "java.lang.Boolean",
+      "description": "Whether to enable basic authentication.",
+      "defaultValue": true
+    }
+  ],
+  "hints": []
+}

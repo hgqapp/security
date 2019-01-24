@@ -20,5 +20,5 @@ public interface AuthorityRepository extends CrudRepository<Authorities, Long> {
 //            "where ugr.user_id=?1 and ugr.group_id=gar.group_id and gar.authority_id=a.authority_id")
     @Query("select a from Authorities a, GroupAuthorityRelations gar, UserGroupRelations ugr " +
             "where ugr.userId = ?1 and a.authorityId = gar.authorityId and gar.groupId = ugr.groupId")
-    List<Authorities> findAuthorityByUserId(Long userId);
+    List<Authorities> findByUserId(Long userId);
 }

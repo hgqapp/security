@@ -1,5 +1,7 @@
 package com.hgq.security.config;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.User;
@@ -10,6 +12,8 @@ import javax.sql.DataSource;
 import java.util.List;
 
 public class CustomUserDetailsService extends JdbcDaoImpl {
+
+    private static final Logger logger = LoggerFactory.getLogger(CustomUserDetailsService.class);
 
     private static final String USERS_BY_USERNAME_QUERY = "select user_id,username,password,phone,email,enabled "
             + "from users " + "where username = ?";
@@ -32,17 +36,30 @@ public class CustomUserDetailsService extends JdbcDaoImpl {
     @SuppressWarnings("ConstantConditions")
     @Override
     protected List<UserDetails> loadUsersByUsername(String username) {
+        logger.debug("==>> 加载用户【{}】的基本信息", username);
         return getJdbcTemplate().query(getUsersByUsernameQuery(),
                 new String[] { username }, (rs, rowNum) -> {
                     Long userId = rs.getLong(1);
                     String username1 = rs.getString(2);
-                    String password = rs.getString(2);
-                    String phone = rs.getString(3);
-                    String email = rs.getString(4);
-                    boolean enabled = rs.getBoolean(5);
+                    String password = rs.getString(3);
+                    String phone = rs.getString(4);
+                    String email = rs.getString(5);
+                    boolean enabled = rs.getBoolean(6);
                     return new CurrentUser(userId, username1, password, phone, email, enabled, true, true, true,
                             AuthorityUtils.NO_AUTHORITIES);
                 });
+    }
+
+    @Override
+    protected List<GrantedAuthority> loadUserAuthorities(String username) {
+        logger.debug("==>> 加载用户【{}】的权限列表", username);
+        return super.loadUserAuthorities(username);
+    }
+
+    @Override
+    protected List<GrantedAuthority> loadGroupAuthorities(String username) {
+        logger.debug("==>> 加载用户【{}】的用户组权限列表", username);
+        return super.loadGroupAuthorities(username);
     }
 
     @Override
@@ -52,7 +69,6 @@ public class CustomUserDetailsService extends JdbcDaoImpl {
         if (!isUsernameBasedPrimaryKey()) {
             returnUsername = username;
         }
-
         CurrentUser currentUser = userFromUserQuery instanceof CurrentUser ? ((CurrentUser) userFromUserQuery) : null;
         if (currentUser != null) {
             return new CurrentUser(currentUser.getUserId(), returnUsername, currentUser.getPassword(),

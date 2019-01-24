@@ -27,14 +27,12 @@ public class Users {
     private Long userId;
     @Column(name = "username", length = 50, nullable = false)
     private String username;
-    @Column(length = 50, nullable = false)
+    @Column(length = 100, nullable = false)
     private String password;
     @Column(length = 100)
     private String email;
     @Column(length = 50)
     private String phone;
-    @Column(length = 50, nullable = false)
-    private String salt;
     @Column(nullable = false, columnDefinition = "boolean default 1")
     private Boolean enabled;
     @Column(name = "create_time", updatable = false, nullable = false, columnDefinition = "bigint unsigned")

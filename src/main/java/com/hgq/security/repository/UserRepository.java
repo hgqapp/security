@@ -1,7 +1,8 @@
 package com.hgq.security.repository;
 
 import com.hgq.security.model.Users;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
@@ -12,10 +13,14 @@ import java.util.Optional;
  * @since 1.0
  */
 @Repository
-public interface UserRepository extends CrudRepository<Users, Long> {
+public interface UserRepository extends JpaRepository<Users, Long> {
 
     /**
      * 根据用户名查找用户
      */
     Optional<Users> findByUsername(String username);
+
+    @Query("SELECT username FROM Users u WHERE u.userId=?1")
+    String getUsernameByUserId(Long userId);
+
 }

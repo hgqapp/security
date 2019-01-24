@@ -1,12 +1,14 @@
 POST http://localhost:8080/user/create
 Cache-Control: no-cache
 Content-Type: application/x-www-form-urlencoded
+Cookie: Hm_lvt_257efbccce3ea2eebc5a5f6c94376665=1534225704; JSESSIONID=4B268240F472826AAE0C91C321474B5B
+Referer: http://localhost:8080/login
+Host: localhost:8080
 
-username=a&password=b&enabled=true
-
+username=a&password=b&phone=c&email=d
 ###
 
-GET http://localhost:8080/user/get?userId=1
+GET http://localhost:8080/user/get?userId=a
 Accept: application/json
 
 ###

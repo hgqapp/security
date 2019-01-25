@@ -99,7 +99,7 @@ public class SecurityConfig {
                 http.userDetailsService(userDetailsService);
                 http
                         .authorizeRequests()
-                        .antMatchers("/css/**", "/index").permitAll()
+                        .antMatchers("/css/**", "/index", "/login").permitAll()
                         .anyRequest().authenticated()
                         .and()
                         .csrf().disable()

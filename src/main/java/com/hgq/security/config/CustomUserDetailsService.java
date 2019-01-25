@@ -36,7 +36,7 @@ public class CustomUserDetailsService extends JdbcDaoImpl {
     @SuppressWarnings("ConstantConditions")
     @Override
     protected List<UserDetails> loadUsersByUsername(String username) {
-        logger.debug("==>> 加载用户【{}】的基本信息", username);
+        logger.trace("==>> 加载用户【{}】的基本信息", username);
         return getJdbcTemplate().query(getUsersByUsernameQuery(),
                 new String[] { username }, (rs, rowNum) -> {
                     Long userId = rs.getLong(1);
@@ -52,13 +52,13 @@ public class CustomUserDetailsService extends JdbcDaoImpl {
 
     @Override
     protected List<GrantedAuthority> loadUserAuthorities(String username) {
-        logger.debug("==>> 加载用户【{}】的权限列表", username);
+        logger.trace("==>> 加载用户【{}】的权限列表", username);
         return super.loadUserAuthorities(username);
     }
 
     @Override
     protected List<GrantedAuthority> loadGroupAuthorities(String username) {
-        logger.debug("==>> 加载用户【{}】的用户组权限列表", username);
+        logger.trace("==>> 加载用户【{}】的用户组权限列表", username);
         return super.loadGroupAuthorities(username);
     }
 

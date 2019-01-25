@@ -1,7 +1,8 @@
 package com.hgq.security.repository;
 
 import com.hgq.security.model.Users;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.querydsl.QuerydslPredicateExecutor;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -10,6 +11,6 @@ import org.springframework.stereotype.Repository;
  * @since 1.0
  */
 @Repository
-public interface UserRepository extends JpaRepository<Users, Long> {
+public interface UserRepository extends CrudRepository<Users, Long>, QuerydslPredicateExecutor<Users> {
 
 }

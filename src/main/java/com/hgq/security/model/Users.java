@@ -1,7 +1,11 @@
 package com.hgq.security.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 
@@ -12,6 +16,8 @@ import javax.persistence.*;
  */
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
 @Table(name = "Users", indexes = {
         @Index(name = "uk_username", columnList = "username", unique = true),
@@ -19,6 +25,8 @@ import javax.persistence.*;
         @Index(name = "idx_phone", columnList = "phone", unique = true),
         @Index(name = "idx_create_time", columnList = "create_time"),
         @Index(name = "idx_update_time", columnList = "update_time")})
+@DynamicInsert
+@DynamicUpdate
 public class Users {
 
     @Id

@@ -36,6 +36,7 @@ import static org.springframework.http.HttpStatus.*;
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     private static final Logger log = LoggerFactory.getLogger(GlobalExceptionHandler.class);
+    private static final int STACK_TRACE_LIMIT = 5;
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Object> handleSystemException(Exception ex, WebRequest request) {
@@ -91,7 +92,14 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         FieldError fieldError = bindingResult.getFieldError();
         String msg = "未知的参数错误";
         if (fieldError != null) {
-            msg = fieldError.getField() + fieldError.getDefaultMessage();
+            String message = fieldError.getDefaultMessage();
+            if (message != null) {
+                if (message.startsWith("^")) {
+                    msg = message.substring(1);
+                } else {
+                    msg = fieldError.getField() + message;
+                }
+            }
         }
         ResultVo body = buildBadRequestResult(status, msg, path);
         return handleExceptionInternal(ex, body, headers, status, request);
@@ -106,11 +114,18 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         Set<ConstraintViolation<?>> violations = ex.getConstraintViolations();
         StringBuilder sb = new StringBuilder();
         violations.forEach(v -> {
-            String name = "";
-            for (Path.Node node : v.getPropertyPath()) {
-                name = node.getName();
+            String message = v.getMessage();
+            if (message != null) {
+                if (message.startsWith("^")) {
+                    sb.append(message.substring(1));
+                } else {
+                    String name = "";
+                    for (Path.Node node : v.getPropertyPath()) {
+                        name = node.getName();
+                    }
+                    sb.append(name).append(message);
+                }
             }
-            sb.append(name).append(v.getMessage());
         });
         ResultVo body = buildBadRequestResult(BAD_REQUEST, sb.toString(), path);
         return handleExceptionInternal(ex, body, new HttpHeaders(), BAD_REQUEST, request);
@@ -138,6 +153,29 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                 .build();
         log.warn("权限校验不通过：{}, PATH=\"{}\"", ex.getMessage(), path);
         return handleExceptionInternal(ex, body, new HttpHeaders(), FORBIDDEN, request);
+    }
+
+    /**
+     * 参数错误异常处理
+     */
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<Object> handleException(IllegalArgumentException ex, WebRequest request) {
+        String path = getPath(request);
+        ResultVo body = ResultVo.builder()
+                .status(BAD_REQUEST.value())
+                .message(ex.getMessage())
+                .path(path)
+                .build();
+        if (log.isWarnEnabled()) {
+            StringBuilder sb = new StringBuilder(String.format("业务异常：%s, PATH=\"%s\"", ex.getMessage(), path));
+            StackTraceElement[] stackTrace = ex.getStackTrace();
+            sb.append(System.lineSeparator()).append(ex);
+            for (int i = 0; i < stackTrace.length && i < STACK_TRACE_LIMIT; i++) {
+                sb.append(System.lineSeparator()).append("    at ").append(stackTrace[i]);
+            }
+            log.warn(sb.toString());
+        }
+        return handleExceptionInternal(ex, body, new HttpHeaders(), BAD_REQUEST, request);
     }
 
     private String getPath(RequestAttributes requestAttributes) {

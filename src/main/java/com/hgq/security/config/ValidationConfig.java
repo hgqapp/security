@@ -28,5 +28,4 @@ public class ValidationConfig {
         factoryBean.getValidationPropertyMap().put("hibernate.validator.fail_fast", Boolean.TRUE.toString());
         return factoryBean;
     }
-
 }

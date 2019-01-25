@@ -1,14 +1,11 @@
 POST http://localhost:8080/user/create
 Cache-Control: no-cache
 Content-Type: application/x-www-form-urlencoded
-Cookie: Hm_lvt_257efbccce3ea2eebc5a5f6c94376665=1534225704; JSESSIONID=4B268240F472826AAE0C91C321474B5B
-Referer: http://localhost:8080/login
-Host: localhost:8080
 
-username=a&password=b&phone=c&email=d
+username=admin1&password=123456&phone=13345667899&email=a@qq.com
 ###
 
-GET http://localhost:8080/user/get?userId=a
+GET http://localhost:8080/user/get?userId=
 Accept: application/json
 
 ###

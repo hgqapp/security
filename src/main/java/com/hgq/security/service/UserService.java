@@ -96,7 +96,6 @@ public class UserService {
 
     public Long delete(@NotNull Long userId) {
         userRepository.findById(userId).ifPresent(v -> userRepository.delete(v));
-        userRepository.deleteById(userId);
         return userId;
     }
 }

@@ -28,9 +28,9 @@ public class UserCondition implements Criterias {
         QUsers users = QUsers.users;
         BooleanBuilder builder = new BooleanBuilder();
         andBetween(builder, users.createTime, createTimeStart, createTimeEnd);
-        andLike(builder, users.username, username);
-        andLike(builder, users.email, email);
-        andLike(builder, users.phone, phone);
+        andCntains(builder, users.username, username);
+        andCntains(builder, users.email, email);
+        andCntains(builder, users.phone, phone);
         andEq(builder, users.enabled, enabled);
         return builder;
     }

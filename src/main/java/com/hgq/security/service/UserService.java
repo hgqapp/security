@@ -4,7 +4,7 @@ import com.hgq.security.beans.condition.Criterias;
 import com.hgq.security.beans.dto.UsersDto;
 import com.hgq.security.beans.vo.UsersPageVo;
 import com.hgq.security.beans.vo.UsersVo;
-import com.hgq.security.config.ValidationGroup;
+import com.hgq.security.config.ValidationGroup.*;
 import com.hgq.security.model.QUsers;
 import com.hgq.security.model.Users;
 import com.hgq.security.repository.UserRepository;
@@ -16,6 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
+import javax.annotation.Nullable;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.groups.Default;
@@ -39,7 +40,7 @@ public class UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @Validated({ValidationGroup.Create.class, Default.class})
+    @Validated({Create.class, Default.class})
     public Long crate(@Valid UsersDto user) {
         checkInput(user);
         Users userModel = modelMapper.map(user, Users.class);
@@ -49,7 +50,7 @@ public class UserService {
         return userRepository.save(userModel).getUserId();
     }
 
-    @Validated({ValidationGroup.Update.class, Default.class})
+    @Validated({Update.class, Default.class})
     public Long update(@Valid UsersDto user) {
         checkInput(user);
         Users userModel = modelMapper.map(user, Users.class);
@@ -81,12 +82,13 @@ public class UserService {
         }
     }
 
+    @Nullable
     public UsersVo getByUserId(@NotNull Long userId) {
         Optional<Users> users = userRepository.findById(userId);
         return users.map(u -> modelMapper.map(u, UsersVo.class)).orElse(null);
     }
 
-    public Page<UsersPageVo> page(Criterias condition, Pageable pageable) {
+    public Page<UsersPageVo> page(@NotNull Criterias condition, @NotNull Pageable pageable) {
         Page<Users> page = userRepository.findAll(condition.create(), pageable);
         return page.map(UsersPageVo::new);
     }

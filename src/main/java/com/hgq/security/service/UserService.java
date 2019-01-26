@@ -1,5 +1,6 @@
 package com.hgq.security.service;
 
+import com.hgq.security.beans.condition.Criterias;
 import com.hgq.security.beans.dto.UsersDto;
 import com.hgq.security.beans.vo.UsersPageVo;
 import com.hgq.security.beans.vo.UsersVo;
@@ -7,7 +8,6 @@ import com.hgq.security.config.ValidationGroup;
 import com.hgq.security.model.QUsers;
 import com.hgq.security.model.Users;
 import com.hgq.security.repository.UserRepository;
-import com.querydsl.core.types.Predicate;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -86,8 +86,8 @@ public class UserService {
         return users.map(u -> modelMapper.map(u, UsersVo.class)).orElse(null);
     }
 
-    public Page<UsersPageVo> page(Predicate predicate, Pageable pageable) {
-        Page<Users> page = userRepository.findAll(predicate, pageable);
+    public Page<UsersPageVo> page(Criterias condition, Pageable pageable) {
+        Page<Users> page = userRepository.findAll(condition.create(), pageable);
         return page.map(UsersPageVo::new);
     }
 

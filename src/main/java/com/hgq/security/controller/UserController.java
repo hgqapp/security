@@ -1,15 +1,13 @@
 package com.hgq.security.controller;
 
+import com.hgq.security.beans.condition.UserCondition;
 import com.hgq.security.beans.dto.UsersDto;
 import com.hgq.security.beans.vo.UsersPageVo;
 import com.hgq.security.beans.vo.UsersVo;
-import com.hgq.security.model.Users;
 import com.hgq.security.service.UserService;
-import com.querydsl.core.types.Predicate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -54,7 +52,7 @@ public class UserController {
 
     @Secured("USER-PAGE")
     @GetMapping("/page")
-    public Page<UsersPageVo> page(@QuerydslPredicate(root = Users.class) Predicate predicate, Pageable pageable) {
-        return userService.page(predicate, pageable);
+    public Page<UsersPageVo> page(UserCondition condition, Pageable pageable) {
+        return userService.page(condition, pageable);
     }
 }

@@ -21,8 +21,8 @@ import javax.persistence.*;
 @Entity
 @Table(name = "Users", indexes = {
         @Index(name = "uk_username", columnList = "username", unique = true),
-        @Index(name = "idx_email", columnList = "email", unique = true),
-        @Index(name = "idx_phone", columnList = "phone", unique = true),
+        @Index(name = "uk_email", columnList = "email", unique = true),
+        @Index(name = "uk_phone", columnList = "phone", unique = true),
         @Index(name = "idx_create_time", columnList = "create_time"),
         @Index(name = "idx_update_time", columnList = "update_time")})
 @DynamicInsert

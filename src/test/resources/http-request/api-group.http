@@ -1,0 +1,22 @@
+POST http://localhost:8080/group/create
+Cache-Control: no-cache
+Content-Type: application/x-www-form-urlencoded
+
+groupName=组七
+###
+
+GET http://localhost:8080/group/get?userId=
+
+###
+
+POST http://localhost:8080/group/delete?groupId=7
+
+###
+
+POST http://localhost:8080/group/update?groupId=2&groupName=组二
+
+###
+
+GET http://localhost:8080/group/page?page=0&size=10&createTimeStart=1548470229275&sort=updateTime,desc&sort=createTime,desc&username=ad
+
+###

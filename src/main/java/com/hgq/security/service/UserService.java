@@ -18,7 +18,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
 import javax.annotation.Nullable;
-import javax.persistence.EntityManager;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.groups.Default;
@@ -41,11 +40,6 @@ public class UserService {
     private UserRepository userRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
-    private final EntityManager entityManager;
-
-    public UserService(EntityManager entityManager) {
-        this.entityManager = entityManager;
-    }
 
     @Validated({Create.class, Default.class})
     public Long crate(@Valid UsersDto user) {
@@ -101,6 +95,7 @@ public class UserService {
     }
 
     public Long delete(@NotNull Long userId) {
+        userRepository.findById(userId).ifPresent(v -> userRepository.delete(v));
         userRepository.deleteById(userId);
         return userId;
     }

@@ -70,14 +70,14 @@ public interface Criterias {
 
     /** between */
     static <T extends Number & Comparable<?>> void andBetween(BooleanBuilder builder, NumberExpression<T> expression, T from, T to) {
-        if (notEmpty(from) && notEmpty(to)) {
+        if (notEmpty(from) || notEmpty(to)) {
             builder.and(expression.between(from, to));
         }
     }
 
     /** not between */
     static <T extends Number & Comparable<?>> void andNotBetween(BooleanBuilder builder, NumberExpression<T> expression, T from, T to) {
-        if (notEmpty(from) && notEmpty(to)) {
+        if (notEmpty(from) || notEmpty(to)) {
             builder.and(expression.notBetween(from, to));
         }
     }

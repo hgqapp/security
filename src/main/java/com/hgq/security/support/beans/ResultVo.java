@@ -1,4 +1,4 @@
-package com.hgq.security.beans.vo;
+package com.hgq.security.support.beans;
 
 /**
  * @author houguangqiang

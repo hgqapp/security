@@ -1,4 +1,4 @@
-package com.hgq.security.config;
+package com.hgq.security.support.validation;
 
 /**
  * @author houguangqiang

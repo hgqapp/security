@@ -2,7 +2,7 @@ POST http://localhost:8080/user/create
 Cache-Control: no-cache
 Content-Type: application/x-www-form-urlencoded
 
-username=ceshi&password=123456&phone=13345667599&email=ab@qq.com
+username=wulixx&password=123456&phone=13345667529&email=abx1@qq.com
 ###
 
 GET http://localhost:8080/user/get?userId=
@@ -17,6 +17,6 @@ POST http://localhost:8080/user/update?userId=2&email=a@qq.com
 
 ###
 
-GET http://localhost:8080/user/page
+GET http://localhost:8080/user/page?page=0&size=10&createTimeStart=1548470229275&sort=updateTime,desc&sort=createTime,desc&username=admin
 
 ###

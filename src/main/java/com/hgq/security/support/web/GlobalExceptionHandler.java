@@ -1,6 +1,6 @@
-package com.hgq.security.support;
+package com.hgq.security.support.web;
 
-import com.hgq.security.beans.vo.ResultVo;
+import com.hgq.security.support.beans.ResultVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.TypeMismatchException;

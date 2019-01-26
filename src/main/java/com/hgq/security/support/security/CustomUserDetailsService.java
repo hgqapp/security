@@ -1,4 +1,4 @@
-package com.hgq.security.config;
+package com.hgq.security.support.security;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,7 +13,7 @@ import java.util.List;
 
 public class CustomUserDetailsService extends JdbcDaoImpl {
 
-    private static final Logger logger = LoggerFactory.getLogger(CustomUserDetailsService.class);
+    private static final Logger log = LoggerFactory.getLogger(CustomUserDetailsService.class);
 
     private static final String USERS_BY_USERNAME_QUERY = "select user_id,username,password,phone,email,enabled "
             + "from users " + "where username = ?";
@@ -36,7 +36,7 @@ public class CustomUserDetailsService extends JdbcDaoImpl {
     @SuppressWarnings("ConstantConditions")
     @Override
     protected List<UserDetails> loadUsersByUsername(String username) {
-        logger.trace("==>> 加载用户【{}】的基本信息", username);
+        log.trace("==>> 加载用户【{}】的基本信息", username);
         return getJdbcTemplate().query(getUsersByUsernameQuery(),
                 new String[] { username }, (rs, rowNum) -> {
                     Long userId = rs.getLong(1);
@@ -52,13 +52,13 @@ public class CustomUserDetailsService extends JdbcDaoImpl {
 
     @Override
     protected List<GrantedAuthority> loadUserAuthorities(String username) {
-        logger.trace("==>> 加载用户【{}】的权限列表", username);
+        log.trace("==>> 加载用户【{}】的权限列表", username);
         return super.loadUserAuthorities(username);
     }
 
     @Override
     protected List<GrantedAuthority> loadGroupAuthorities(String username) {
-        logger.trace("==>> 加载用户【{}】的用户组权限列表", username);
+        log.trace("==>> 加载用户【{}】的用户组权限列表", username);
         return super.loadGroupAuthorities(username);
     }
 

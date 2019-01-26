@@ -1,11 +1,12 @@
 package com.hgq.security.beans.condition;
 
 import com.hgq.security.model.QUsers;
+import com.hgq.security.support.jpa.querydsl.Criterias;
 import com.querydsl.core.BooleanBuilder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import static com.hgq.security.beans.condition.Criterias.*;
+import static com.hgq.security.support.jpa.querydsl.Criterias.*;
 
 
 /**

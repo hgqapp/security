@@ -1,10 +1,11 @@
 package com.hgq.security.service;
 
-import com.hgq.security.beans.condition.Criterias;
+import com.hgq.security.support.jpa.querydsl.Criterias;
 import com.hgq.security.beans.dto.UsersDto;
 import com.hgq.security.beans.vo.UsersPageVo;
 import com.hgq.security.beans.vo.UsersVo;
-import com.hgq.security.config.ValidationGroup.*;
+import com.hgq.security.support.validation.ValidationGroup.Create;
+import com.hgq.security.support.validation.ValidationGroup.Update;
 import com.hgq.security.model.QUsers;
 import com.hgq.security.model.Users;
 import com.hgq.security.repository.UserRepository;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
 import javax.annotation.Nullable;
+import javax.persistence.EntityManager;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.groups.Default;
@@ -39,6 +41,11 @@ public class UserService {
     private UserRepository userRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
+    private final EntityManager entityManager;
+
+    public UserService(EntityManager entityManager) {
+        this.entityManager = entityManager;
+    }
 
     @Validated({Create.class, Default.class})
     public Long crate(@Valid UsersDto user) {

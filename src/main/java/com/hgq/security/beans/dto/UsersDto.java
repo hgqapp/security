@@ -1,7 +1,7 @@
 package com.hgq.security.beans.dto;
 
-import com.hgq.security.config.ValidationGroup.Create;
-import com.hgq.security.config.ValidationGroup.Update;
+import com.hgq.security.support.validation.ValidationGroup.Create;
+import com.hgq.security.support.validation.ValidationGroup.Update;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

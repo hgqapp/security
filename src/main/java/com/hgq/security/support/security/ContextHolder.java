@@ -1,4 +1,4 @@
-package com.hgq.security.support;
+package com.hgq.security.support.security;
 
 import org.springframework.security.authentication.AuthenticationTrustResolver;
 import org.springframework.security.authentication.AuthenticationTrustResolverImpl;

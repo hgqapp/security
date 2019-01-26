@@ -1,4 +1,4 @@
-package com.hgq.security.beans.condition;
+package com.hgq.security.support.jpa.querydsl;
 
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.dsl.NumberExpression;

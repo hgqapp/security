@@ -1,14 +1,14 @@
 package com.hgq.security.service;
 
-import com.hgq.security.support.jpa.querydsl.Criterias;
 import com.hgq.security.beans.dto.UsersDto;
 import com.hgq.security.beans.vo.UsersPageVo;
 import com.hgq.security.beans.vo.UsersVo;
-import com.hgq.security.support.validation.ValidationGroup.Create;
-import com.hgq.security.support.validation.ValidationGroup.Update;
 import com.hgq.security.model.QUsers;
 import com.hgq.security.model.Users;
 import com.hgq.security.repository.UserRepository;
+import com.hgq.security.support.jpa.querydsl.Criterias;
+import com.hgq.security.support.validation.ValidationGroup.Create;
+import com.hgq.security.support.validation.ValidationGroup.Update;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
 import javax.annotation.Nullable;
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.groups.Default;
@@ -83,9 +84,11 @@ public class UserService {
         }
     }
 
+    @Transactional
     @Nullable
     public UsersVo getByUserId(@NotNull Long userId) {
         Optional<Users> users = userRepository.findById(userId);
+        System.out.println(users.get().getRoles());
         return users.map(u -> modelMapper.map(u, UsersVo.class)).orElse(null);
     }
 

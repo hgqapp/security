@@ -9,7 +9,10 @@ import javax.persistence.*;
 @Data
 @NoArgsConstructor
 @Entity
-@Table(name = "`groups`", indexes = {@Index(name = "uk_group_name", columnList = "group_name", unique = true)})
+@Table(name = "`groups`", indexes = {
+        @Index(name = "uk_group", columnList = "group", unique = true),
+        @Index(name = "uk_group_name", columnList = "group_name", unique = true)
+})
 public class Groups {
 
     @Id
@@ -18,4 +21,6 @@ public class Groups {
     private Long groupId;
     @Column(name = "group_name", length = 50, nullable = false)
     private String groupName;
+    @Column(name = "`group`", length = 50, nullable = false)
+    private String group;
 }

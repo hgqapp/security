@@ -88,7 +88,6 @@ public class UserService {
     @Nullable
     public UsersVo getByUserId(@NotNull Long userId) {
         Optional<Users> users = userRepository.findById(userId);
-        System.out.println(users.get().getRoles());
         return users.map(u -> modelMapper.map(u, UsersVo.class)).orElse(null);
     }
 

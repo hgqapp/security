@@ -5,7 +5,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -24,7 +23,5 @@ public class Roles {
     private String roleName;
     @Column(name = "role", length = 50, nullable = false)
     private String role;
-    @Transient
-    @OneToMany(targetEntity = UserRoleRelations.class, mappedBy = "role")
-    private List<Users> users;
+
 }

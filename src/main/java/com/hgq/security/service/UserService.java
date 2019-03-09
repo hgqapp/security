@@ -3,6 +3,7 @@ package com.hgq.security.service;
 import com.hgq.security.beans.dto.UsersDto;
 import com.hgq.security.beans.vo.UsersPageVo;
 import com.hgq.security.beans.vo.UsersVo;
+import com.hgq.security.manager.PermissionManager;
 import com.hgq.security.model.QUsers;
 import com.hgq.security.model.Users;
 import com.hgq.security.repository.UserRepository;
@@ -13,6 +14,10 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.query.Param;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.acls.domain.BasePermission;
+import org.springframework.security.acls.domain.PrincipalSid;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
@@ -42,14 +47,20 @@ public class UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Autowired
+    private PermissionManager permissionManager;
+
+    @Transactional
     @Validated({Create.class, Default.class})
-    public Long crate(@Valid UsersDto user) {
+    public Long create(@Valid UsersDto user) {
         checkInput(user);
         Users userModel = modelMapper.map(user, Users.class);
         userModel.setPassword(passwordEncoder.encode(user.getPassword()));
         userModel.setCreateTime(System.currentTimeMillis());
         userModel.setUpdateTime(userModel.getCreateTime());
-        return userRepository.save(userModel).getUserId();
+        Long userId = userRepository.save(userModel).getUserId();
+        permissionManager.addPermission(userId, Users.class.getName(), new PrincipalSid("admin"), BasePermission.ADMINISTRATION);
+        return userId;
     }
 
     @Validated({Update.class, Default.class})
@@ -84,9 +95,10 @@ public class UserService {
         }
     }
 
-    @Transactional
+
+    @PreAuthorize("hasPermission(#userId,'com.hgq.security.model.Users', 'READ')")
     @Nullable
-    public UsersVo getByUserId(@NotNull Long userId) {
+    public UsersVo getByUserId(@NotNull @Param("userId") Long userId) {
         Optional<Users> users = userRepository.findById(userId);
         return users.map(u -> modelMapper.map(u, UsersVo.class)).orElse(null);
     }

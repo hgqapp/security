@@ -22,8 +22,8 @@ public class CustomUserDetailsService extends JdbcDaoImpl {
             "authorities a where u.username=? and u.user_id=ua.user_id and ua.authority_id=a.authority_id";
 
     private static final String GROUP_AUTHORITIES_BY_USERNAME_QUERY = "select distinct u.username, a.authority_id,a.authority from users u," +
-            "user_group_relations ug,group_authority_relations ga, authorities a where u.username=? " +
-            "and u.user_id=ug.user_id and ug.group_id=ga.group_id and ga.authority_id=a.authority_id";
+            "user_role_relations ur,role_authority_relations ra, authorities a where u.username=? " +
+            "and u.user_id=ur.user_id and ur.role_id=ra.role_id and ra.authority_id=a.authority_id";
 
     public CustomUserDetailsService(DataSource dataSource) {
         setUsersByUsernameQuery(USERS_BY_USERNAME_QUERY);

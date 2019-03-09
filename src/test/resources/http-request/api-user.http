@@ -1,8 +1,9 @@
 POST http://localhost:8080/user/create
 Cache-Control: no-cache
 Content-Type: application/x-www-form-urlencoded
+Cookie: Hm_lvt_257efbccce3ea2eebc5a5f6c94376665=1534225704; JSESSIONID=9AE00BAB9C640C37A3D1C02BBB175F32
 
-username=wulixx&password=123456&phone=13345667529&email=abx1@qq.com
+username=wulixx3&password=123456&phone=13345667548&email=abx83@qq.com
 ###
 
 GET http://localhost:8080/user/get?userId=1

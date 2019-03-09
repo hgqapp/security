@@ -26,31 +26,31 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @Secured("USER-CREATE")
+    @Secured("API-USER-CREATE")
     @PostMapping("/create")
     public Long create(UsersDto user) {
-        return userService.crate(user);
+        return userService.create(user);
     }
 
-    @Secured("USER-UPDATE")
+    @Secured("API-USER-UPDATE")
     @PostMapping("/update")
     public Long update(UsersDto user) {
         return userService.update(user);
     }
 
-    @Secured("USER-GET")
+    @Secured("API-USER-GET")
     @GetMapping("/get")
     public UsersVo get(Long userId) {
         return userService.getByUserId(userId);
     }
 
-    @Secured("USER-DELETE")
+    @Secured("API-USER-DELETE")
     @PostMapping("/delete")
     public Long delete(Long userId) {
         return userService.delete(userId);
     }
 
-    @Secured("USER-PAGE")
+    @Secured("API-USER-PAGE")
     @GetMapping("/page")
     public Page<UsersPageVo> page(UserCondition condition, Pageable pageable) {
         return userService.page(condition, pageable);

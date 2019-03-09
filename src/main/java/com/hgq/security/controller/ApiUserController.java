@@ -18,7 +18,7 @@ public class ApiUserController {
 
     @PostMapping("/create")
     public Long create(UsersDto user) {
-        return userService.crate(user);
+        return userService.create(user);
     }
 
 

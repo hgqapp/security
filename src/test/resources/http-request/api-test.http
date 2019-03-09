@@ -1,0 +1,32 @@
+
+### 回调确认
+
+POST http://oa.gzlawyer.org/service/rest/dm.DataService/gam.PaperCourse@addTrainingRecord/invoke
+content-type: application/json
+Cookie: bad_id36c8e930-c0aa-11e8-a90d-9d1e547c2986=84b9ba31-2ff8-11e9-b425-5f04bb957a92; nice_id36c8e930-c0aa-11e8-a90d-9d1e547c2986=84b9ba32-2ff8-11e9-b425-5f04bb957a92; JSESSIONID=914C53D1530EF322B470D16BA67F21C1; qimo_seosource_7192eb20-c0a9-11e8-a90d-9d1e547c2986=%E5%85%B6%E4%BB%96%E7%BD%91%E7%AB%99; qimo_seokeywords_7192eb20-c0a9-11e8-a90d-9d1e547c2986=%E6%9C%AA%E7%9F%A5; href=http%3A%2F%2Foa.gzlawyer.org%2Fworkbench%2F%23%2F; accessId=7192eb20-c0a9-11e8-a90d-9d1e547c2986; pageViewNum=1; bad_id7192eb20-c0a9-11e8-a90d-9d1e547c2986=c18d0431-2ff8-11e9-9eea-5fae95389fe6; nice_id7192eb20-c0a9-11e8-a90d-9d1e547c2986=c18d0432-2ff8-11e9-9eea-5fae95389fe6; b_Admin_visibility=hidden
+Host: oa.gzlawyer.org
+Origin: http://oa.gzlawyer.org
+Referer: http://oa.gzlawyer.org/views/gam/paperCourse-mvc-view.jsp?id=593ded01e44843d1a9614ad5871b3090
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36
+
+{"paperCourseId":"593ded01096c4d89ba2d83332fc63f75","lawyerId":"7a0a7f97e965449eadf3188e68214267"}
+
+### 第一次查看
+
+GET http://oa.gzlawyer.org/views/gam/paperCourse-mvc-view.jsp?id=593ded01e6b5402288315ac5efa53c9f
+Cookie: bad_id36c8e930-c0aa-11e8-a90d-9d1e547c2986=84b9ba31-2ff8-11e9-b425-5f04bb957a92; nice_id36c8e930-c0aa-11e8-a90d-9d1e547c2986=84b9ba32-2ff8-11e9-b425-5f04bb957a92; JSESSIONID=914C53D1530EF322B470D16BA67F21C1; qimo_seosource_7192eb20-c0a9-11e8-a90d-9d1e547c2986=%E5%85%B6%E4%BB%96%E7%BD%91%E7%AB%99; qimo_seokeywords_7192eb20-c0a9-11e8-a90d-9d1e547c2986=%E6%9C%AA%E7%9F%A5; href=http%3A%2F%2Foa.gzlawyer.org%2Fworkbench%2F%23%2F; accessId=7192eb20-c0a9-11e8-a90d-9d1e547c2986; pageViewNum=1; bad_id7192eb20-c0a9-11e8-a90d-9d1e547c2986=c18d0431-2ff8-11e9-9eea-5fae95389fe6; nice_id7192eb20-c0a9-11e8-a90d-9d1e547c2986=c18d0432-2ff8-11e9-9eea-5fae95389fe6; b_Admin_visibility=hidden
+Host: oa.gzlawyer.org
+Origin: http://oa.gzlawyer.org
+Referer: http://oa.gzlawyer.org/views/gam/paperCourse-mvc-view.jsp?id=593ded01e44843d1a9614ad5871b3090
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36
+
+### 再次查看
+
+GET http://oa.gzlawyer.org/views/gam/paperCourse-mvc-view.jsp?id=593ded01e44843d1a9614ad5871b3090
+Cookie: bad_id36c8e930-c0aa-11e8-a90d-9d1e547c2986=84b9ba31-2ff8-11e9-b425-5f04bb957a92; nice_id36c8e930-c0aa-11e8-a90d-9d1e547c2986=84b9ba32-2ff8-11e9-b425-5f04bb957a92; JSESSIONID=914C53D1530EF322B470D16BA67F21C1; qimo_seosource_7192eb20-c0a9-11e8-a90d-9d1e547c2986=%E5%85%B6%E4%BB%96%E7%BD%91%E7%AB%99; qimo_seokeywords_7192eb20-c0a9-11e8-a90d-9d1e547c2986=%E6%9C%AA%E7%9F%A5; href=http%3A%2F%2Foa.gzlawyer.org%2Fworkbench%2F%23%2F; accessId=7192eb20-c0a9-11e8-a90d-9d1e547c2986; pageViewNum=1; bad_id7192eb20-c0a9-11e8-a90d-9d1e547c2986=c18d0431-2ff8-11e9-9eea-5fae95389fe6; nice_id7192eb20-c0a9-11e8-a90d-9d1e547c2986=c18d0432-2ff8-11e9-9eea-5fae95389fe6; b_Admin_visibility=hidden
+Host: oa.gzlawyer.org
+Origin: http://oa.gzlawyer.org
+Referer: http://oa.gzlawyer.org/views/gam/paperCourse-mvc-view.jsp?id=593ded01e44843d1a9614ad5871b3090
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36
+
+###

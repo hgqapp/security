@@ -23,7 +23,7 @@ public class IndexController {
 
     @PostMapping("/create")
     public Long create(UsersDto user) {
-        return userService.crate(user);
+        return userService.create(user);
     }
 
 

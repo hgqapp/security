@@ -8,7 +8,6 @@ import org.springframework.security.acls.domain.ObjectIdentityImpl;
 import org.springframework.security.acls.model.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Service;
 
 import java.io.Serializable;
 import java.util.List;
@@ -18,7 +17,7 @@ import java.util.List;
  * @date 2019-02-13
  * @since 1.0
  */
-@Service
+//@Service
 public class PermissionManager {
 
     private static final Logger logger = LoggerFactory.getLogger(PermissionManager.class);

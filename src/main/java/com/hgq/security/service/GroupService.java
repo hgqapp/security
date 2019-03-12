@@ -14,8 +14,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -24,6 +26,7 @@ import java.util.Optional;
 
 import static org.springframework.util.Assert.isTrue;
 
+@Transactional
 @Validated
 @Service
 public class GroupService {
@@ -33,6 +36,7 @@ public class GroupService {
     @Autowired
     private ModelMapper modelMapper;
 
+    @Nonnull
     @Validated({Create.class, Default.class})
     public Long crate(@Valid GroupsDto group) {
         checkInput(group);
@@ -40,6 +44,7 @@ public class GroupService {
         return groupRepository.save(groupModel).getGroupId();
     }
 
+    @Nonnull
     @Validated({ValidationGroup.Update.class, Default.class})
     public Long update(@Valid GroupsDto group) {
         checkInput(group);
@@ -67,11 +72,13 @@ public class GroupService {
         return groups.map(u -> modelMapper.map(u, GroupsVo.class)).orElse(null);
     }
 
+    @Nonnull
     public Page<GroupsPageVo> page(@NotNull Criterias condition, @NotNull Pageable pageable) {
         Page<Groups> page = groupRepository.findAll(condition.create(), pageable);
         return page.map(GroupsPageVo::new);
     }
 
+    @Nonnull
     public Long delete(@NotNull Long groupId) {
         groupRepository.findById(groupId).ifPresent(v -> groupRepository.delete(v));
         return groupId;

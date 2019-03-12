@@ -3,7 +3,6 @@ package com.hgq.security.service;
 import com.hgq.security.beans.dto.UsersDto;
 import com.hgq.security.beans.vo.UsersPageVo;
 import com.hgq.security.beans.vo.UsersVo;
-import com.hgq.security.manager.PermissionManager;
 import com.hgq.security.model.QUsers;
 import com.hgq.security.model.Users;
 import com.hgq.security.repository.UserRepository;
@@ -14,16 +13,11 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.repository.query.Param;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.acls.domain.BasePermission;
-import org.springframework.security.acls.domain.PrincipalSid;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
-import javax.annotation.Nullable;
-import javax.transaction.Transactional;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.groups.Default;
@@ -36,6 +30,7 @@ import static org.springframework.util.Assert.isTrue;
  * @date 2018-11-30
  * @since 1.0
  */
+@Transactional
 @Service
 @Validated
 public class UserService {
@@ -47,10 +42,8 @@ public class UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @Autowired
-    private PermissionManager permissionManager;
-
-    @Transactional
+//    @Autowired
+//    private PermissionManager permissionManager;
     @Validated({Create.class, Default.class})
     public Long create(@Valid UsersDto user) {
         checkInput(user);
@@ -59,7 +52,7 @@ public class UserService {
         userModel.setCreateTime(System.currentTimeMillis());
         userModel.setUpdateTime(userModel.getCreateTime());
         Long userId = userRepository.save(userModel).getUserId();
-        permissionManager.addPermission(userId, Users.class.getName(), new PrincipalSid("admin"), BasePermission.ADMINISTRATION);
+//        permissionManager.addPermission(userId, Users.class.getName(), new PrincipalSid("admin"), BasePermission.ADMINISTRATION);
         return userId;
     }
 
@@ -96,9 +89,7 @@ public class UserService {
     }
 
 
-    @PreAuthorize("hasPermission(#userId,'com.hgq.security.model.Users', 'READ')")
-    @Nullable
-    public UsersVo getByUserId(@NotNull @Param("userId") Long userId) {
+    public UsersVo getByUserId(@NotNull Long userId) {
         Optional<Users> users = userRepository.findById(userId);
         return users.map(u -> modelMapper.map(u, UsersVo.class)).orElse(null);
     }

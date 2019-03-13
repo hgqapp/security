@@ -1,6 +1,5 @@
 package com.hgq.security.beans.vo;
 
-import com.hgq.security.model.Users;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -21,13 +20,4 @@ public class UsersPageVo {
     private Long createTime;
     private Long updateTime;
 
-    public UsersPageVo(Users user) {
-        this.userId = user.getUserId();
-        this.username = user.getUsername();
-        this.email = user.getEmail();
-        this.phone = user.getPhone();
-        this.enabled = user.getEnabled();
-        this.createTime = user.getCreateTime();
-        this.updateTime = user.getUpdateTime();
-    }
 }

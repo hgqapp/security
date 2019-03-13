@@ -59,9 +59,11 @@ public class UserService {
     @Validated({Update.class, Default.class})
     public Long update(@Valid UsersDto user) {
         checkInput(user);
-        Users userModel = modelMapper.map(user, Users.class);
-        userModel.setUpdateTime(System.currentTimeMillis());
-        userRepository.save(userModel);
+        Optional<Users> dbUser = userRepository.findById(user.getUserId());
+        dbUser.ifPresent(u -> {
+            modelMapper.map(user, u);
+            u.setUpdateTime(System.currentTimeMillis());
+        });
         return user.getUserId();
     }
 
@@ -88,19 +90,17 @@ public class UserService {
         }
     }
 
-
-    public UsersVo getByUserId(@NotNull Long userId) {
+    public UsersVo get(@NotNull Long userId) {
         Optional<Users> users = userRepository.findById(userId);
         return users.map(u -> modelMapper.map(u, UsersVo.class)).orElse(null);
     }
 
     public Page<UsersPageVo> page(@NotNull Criterias condition, @NotNull Pageable pageable) {
         Page<Users> page = userRepository.findAll(condition.create(), pageable);
-        return page.map(UsersPageVo::new);
+        return page.map(u -> modelMapper.map(u, UsersPageVo.class));
     }
 
-    public Long delete(@NotNull Long userId) {
+    public void delete(@NotNull Long userId) {
         userRepository.findById(userId).ifPresent(v -> userRepository.delete(v));
-        return userId;
     }
 }

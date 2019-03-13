@@ -47,6 +47,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         ResultVo body = ResultVo.builder()
                 .status(INTERNAL_SERVER_ERROR.value())
                 .message("系统繁忙")
+                .path(path)
                 .build();
         return handleExceptionInternal(ex, body, new HttpHeaders(), INTERNAL_SERVER_ERROR, request);
     }

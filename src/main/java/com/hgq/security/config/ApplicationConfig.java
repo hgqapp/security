@@ -1,5 +1,7 @@
 package com.hgq.security.config;
 
+import com.github.jmnarloch.spring.boot.modelmapper.ModelMapperConfigurer;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
@@ -10,6 +12,10 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class ApplicationConfig {
 
+    @Bean
+    public ModelMapperConfigurer modelMapper() {
+        return modelMapper -> modelMapper.getConfiguration().setPropertyCondition(ctx -> ctx.getSource() != null);
+    }
 //    @Configuration
 //    @ConditionalOnExpression("'${spring.jpa.hibernate.ddl-auto}'.equals('create') || '${spring.jpa.hibernate.ddl-auto}'.equals('create-drop')")
 //    class DatabaseInitializerConfiguration implements ApplicationContextAware {
